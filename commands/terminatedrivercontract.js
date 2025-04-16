@@ -26,8 +26,6 @@ module.exports = {
         .setRequired(false)),
     async execute(interaction){
         console.log("[DEBUG] terminatedrivercontract triggered by", interaction.user.username);
-
-        await interaction.deferReply({ ephemeral: true})
         
         const driver = interaction.options.getUser('driver');
         const team = interaction.options.getRole('team');
@@ -58,7 +56,5 @@ module.exports = {
             content: 'Contract successfully terminated!',
             ephemeral: true
         });
-
-        await interaction.editReply({ content: 'Contract successfully terminated!'});
     }
 }
