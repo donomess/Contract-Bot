@@ -102,6 +102,9 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
             { body: [] }
         )
         console.log("Old commands cleared!");
+
+        await new  Promise(resolve => setTimeout(resolve,3000));
+
         console.log("Reigstering commands...");
         await rest.put(
             Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
