@@ -1,14 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, Client , GatewayIntentBits, Partials} = require('discord.js');
-const config = require('./config.json');
-
-const client = new Client({
-    intents: [ 
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages
-    ],
-    partials: [Partials.Message, Partials.Channel, Partials.Reaction]
-});
-
+const { SlashCommandBuilder, EmbedBuilder} = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
