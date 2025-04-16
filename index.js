@@ -57,10 +57,6 @@ client.on('interactionCreate', async interaction => {
             ephemeral: true
         });
     }
-});
-
-client.on('interactionCreate', async interaction => {
-    if(!interaction.isChatInputCommand()) return;
 
     if(interaction.commandName === 'createtpcontract'){
         if(interaction.channelId !== config.homeChannelId){
@@ -96,10 +92,6 @@ client.on('interactionCreate', async interaction => {
             ephemeral: true
         });
     }
-});
-
-client.on('interactionCreate', async interaction => {
-    if(!interaction.isChatInputCommand()) return;
 
     if(interaction.commandName === 'terminatedrivercontract'){
         if(interaction.channelId !== config.homeChannelId){
@@ -138,10 +130,6 @@ client.on('interactionCreate', async interaction => {
             ephemeral: true
         });
     }
-});
-
-client.on('interactionCreate', async interaction => {
-    if(!interaction.isChatInputCommand()) return;
 
     if(interaction.commandName === 'createtpcontract'){
         if(interaction.channelId !== config.homeChannelId){
@@ -180,5 +168,6 @@ client.on('interactionCreate', async interaction => {
         });
     }
 });
+
 
 client.login(process.env.TOKEN);
