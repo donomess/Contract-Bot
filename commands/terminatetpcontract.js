@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, Client , GatewayIntentBits, Partials} = require('discord.js');
+const config = require('./config.json');
 
 const client = new Client({
     intents: [ 
