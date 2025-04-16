@@ -1,96 +1,22 @@
-const { REST, Routes, SlashCommandBuilder } = require('discord.js');
+const { REST, Routes} = require('discord.js');
 require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
 
-const commands = [
-    new SlashCommandBuilder()
-    .setName('createdrivercontract')
-    .setDescription('Create a new driver contract')
-    .addUserOption(option =>
-        option.setName('driver')
-        .setDescription('Driver being contracted')
-        .setRequired(true))
-    .addRoleOption(option=>
-        option.setName('team')
-        .setDescription('The team the driver is racing for')
-        .setRequired(true))
-    .addStringOption(option => 
-        option.setName('tier')
-        .setDescription('Tier of the driver contract, include (reserve) if needed')
-        .setRequired(true))
-    .addStringOption(option => 
-        option.setName('length')
-        .setDescription('Length of the contract')
-        .setRequired(true))
-    .addStringOption(option => 
-        option.setName('objectives')
-        .setDescription('Objectives for the driver during the duration of the contract')
-        .setRequired(true))
-    .addStringOption(option => 
-        option.setName('termination')
-        .setDescription('Not required. Mutual termination is implied')
-        .setRequired(false)),
+const {TOKEN, CLIENT_ID, GUILD_ID} = process.env;
 
-    new SlashCommandBuilder()
-        .setName('createtpcontract')
-        .setDescription('Create a new Vice TP Contract')
-        .addUserOption(option =>
-            option.setName('vicetp')
-            .setDescription('Person becoming Vice TP')
-            .setRequired(true))
-        .addRoleOption(option =>
-            option.setName('team')
-            .setDescription('The team the person is becoming Vice TP for')
-            .setRequired(true))
-        .addStringOption(option =>
-            option.setName('termination')
-            .setDescription('Termination Clause(s), mutual agreement is implied.')
-            .setRequired(false)),
+const commands = [];
+const cmdPath = path.join(__dirname, 'commands');
+const cmdFiles = fs.readdirSync(cmdPath).filter(file => file.endsWith('.js'));
 
-    new SlashCommandBuilder()
-    .setName('terminatedrivercontract')
-    .setDescription('Terminate driver contract')
-    .addUserOption(option =>
-        option.setName('driver')
-        .setDescription('Driver being terminated')
-        .setRequired(true))
-    .addRoleOption(option=>
-        option.setName('team')
-        .setDescription('The team the driver is being terminated from')
-        .setRequired(true))
-    .addStringOption(option => 
-        option.setName('tier')
-        .setDescription('Tier of the driver contract, include (reserve) if needed')
-        .setRequired(true))
-    .addStringOption(option => 
-        option.setName('termination')
-        .setDescription('Termination reason')
-        .setRequired(true))
-    .addAttachmentOption(option =>
-        option.setName('evidence')
-        .setDescription('Attachment Evidence of the termination (if needed)')
-        .setRequired(false)),
-    
-    new SlashCommandBuilder()
-    .setName('terminatetpcontract')
-    .setDescription('Terminate a Vice TP Contract')
-    .addUserOption(option =>
-        option.setName('vicetp')
-        .setDescription('Person being terminated Vice TP')
-        .setRequired(true))
-    .addRoleOption(option =>
-        option.setName('team')
-        .setDescription('The team the person is no longer Vice TP for')
-        .setRequired(true))
-    .addStringOption(option =>
-        option.setName('termination')
-        .setDescription('Termination reason')
-        .setRequired(true))
-    .addAttachmentOption(option =>
-        option.setName('evidence')
-        .setDescription('Attachment Evidence of the termination (if needed)')
-        .setRequired(false))
-    .toJSON()
-];
+for (const file of cmdFiles){
+    const command = require(`./commands/${file}`);
+    if ('data' in command && 'execute' in command){
+        commands.push(command.data.toJSON());
+    } else{
+        console.warn(`[WARNING] The command at ./commands/${file} is missing "data" or "execute".`);
+    }
+}
 
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
