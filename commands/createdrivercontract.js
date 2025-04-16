@@ -28,7 +28,7 @@ module.exports = {
         option.setName('termination')
         .setDescription('Not required. Mutual termination is implied')
         .setRequired(false)),
-    async execute(interaction){
+    async execute(interaction, client, config){
         console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
 
         const driver = interaction.options.getUser('driver');

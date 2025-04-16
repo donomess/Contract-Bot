@@ -20,7 +20,7 @@ module.exports = {
         option.setName('evidence')
         .setDescription('Attachment Evidence of the termination (if needed)')
         .setRequired(false)),
-    async execute(interaction){
+    async execute(interaction, client, config){
         console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
         
         const vicetp = interaction.options.getUser('vicetp');

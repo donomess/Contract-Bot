@@ -16,7 +16,7 @@ module.exports = {
         option.setName('termination')
         .setDescription('Termination Clause(s), mutual agreement is implied.')
         .setRequired(false)),
-    async execute(interaction){
+    async execute(interaction, client, config){
         console.log("[DEBUG] createtpcontract triggered by", interaction.user.username);
         
         const vicetp = interaction.options.getUser('vicetp');

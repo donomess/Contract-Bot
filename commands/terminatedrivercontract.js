@@ -24,7 +24,7 @@ module.exports = {
         option.setName('evidence')
         .setDescription('Attachment Evidence of the termination (if needed)')
         .setRequired(false)),
-    async execute(interaction){
+    async execute(interaction, client, config){
         console.log("[DEBUG] terminatedrivercontract triggered by", interaction.user.username);
         
         const driver = interaction.options.getUser('driver');
