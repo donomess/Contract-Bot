@@ -28,41 +28,62 @@ module.exports = {
         option.setName('termination')
         .setDescription('Not required. Mutual termination is implied')
         .setRequired(false)),
-    async execute(interaction, client, config){
+    async execute(interaction, client, config) {
         console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
-
-        await interaction.deferReply({ ephemeral: true });
-
-        const driver = interaction.options.getUser('driver');
-        const team = interaction.options.getRole('team');
-        const tier = interaction.options.getString('tier');
-        const length = interaction.options.getString('length')
-        const objectives = interaction.options.getString('objectives');
-        const terms = interaction.options.getString('termination');
-        console.log('creating driver contract')
-
-        const result = new EmbedBuilder()
-            .setTitle(`Driver Contract for - ${driver.username}`)
-            .setThumbnail(driver.displayAvatarURL({dynamic: true}))
-            .addFields(
-                {name: 'Team', value: `${team}`, inline:true},
-                {name: 'Tier', value: `${tier}`, inline:true},
-                {name: 'Length', value: `${length}`, inline:true},
-                {name: 'Objectives', value: `${objectives}`, inline:true},
-                {name: 'Termination Clauses', value: `${terms}`, inline:true},
-
-            )
-            .setFooter({text: 'Tick to accept!'})
-            .setColor('DarkGreen')
-            .setTimestamp();
-        
-        const contractChannel = await client.channels.fetch(config.destChannelId)
-        const contractMessage = await contractChannel.send({content:`${driver}`, embeds: [result]});
-
-        await contractMessage.react('✅');
-
-        await interaction.editReply({
-            content: 'Contract successfully created!',
-        });
+    
+        try {
+            await interaction.deferReply({ ephemeral: true });
+    
+            const driver = interaction.options.getUser('driver');
+            const team = interaction.options.getRole('team');
+            const tier = interaction.options.getString('tier');
+            const length = interaction.options.getString('length');
+            const objectives = interaction.options.getString('objectives');
+            const terms = interaction.options.getString('termination');
+    
+            const result = new EmbedBuilder()
+                .setTitle(`Driver Contract for - ${driver.username}`)
+                .setThumbnail(driver.displayAvatarURL({ dynamic: true }))
+                .addFields(
+                    { name: 'Team', value: `${team}`, inline: true },
+                    { name: 'Tier', value: `${tier}`, inline: true },
+                    { name: 'Length', value: `${length}`, inline: true },
+                    { name: 'Objectives', value: `${objectives}`, inline: true },
+                    { name: 'Termination Clauses', value: terms ?? 'Mutual termination implied.', inline: true }
+                )
+                .setFooter({ text: 'Tick to accept!' })
+                .setColor('DarkGreen')
+                .setTimestamp();
+    
+            const contractChannel = await client.channels.fetch(config.destChannelId);
+            const contractMessage = await contractChannel.send({ content: `${driver}`, embeds: [result] });
+    
+            await contractMessage.react('✅');
+    
+            await interaction.editReply({
+                content: 'Contract successfully created!',
+            });
+        } catch (err) {
+            console.error('Error executing createdrivercontract:', err);
+    
+            if (interaction.deferred || interaction.replied) {
+                try {
+                    await interaction.editReply({
+                        content: 'Something went wrong while creating the contract.',
+                    });
+                } catch (e) {
+                    console.error('Failed to edit reply after error:', e);
+                }
+            } else {
+                try {
+                    await interaction.reply({
+                        content: 'Something went wrong while creating the contract.',
+                        ephemeral: true,
+                    });
+                } catch (e) {
+                    console.error('Failed to send reply after error:', e);
+                }
+            }
+        }
     }
 }
