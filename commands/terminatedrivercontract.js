@@ -27,7 +27,7 @@ module.exports = {
     async execute(interaction, client, config){
         console.log("[DEBUG] terminatedrivercontract triggered by", interaction.user.username);
 
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ flags: 64 });
         
         const driver = interaction.options.getUser('driver');
         const team = interaction.options.getRole('team');

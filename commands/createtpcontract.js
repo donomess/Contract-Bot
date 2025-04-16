@@ -19,7 +19,7 @@ module.exports = {
     async execute(interaction, client, config){
         console.log("[DEBUG] createtpcontract triggered by", interaction.user.username);
 
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ flags: 64 });
         
         const vicetp = interaction.options.getUser('vicetp');
         const team = interaction.options.getRole('team');

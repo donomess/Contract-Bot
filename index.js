@@ -45,10 +45,25 @@ client.on('interactionCreate', async interaction => {
         await command.execute(interaction, client, config);
     } catch (error) {
         console.error(`Error executing ${interaction.commandName}:`, error);
-        if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({ content: 'There was an error while executing this command!'});
+
+        if (!interaction.replied && !interaction.deferred) {
+            try {
+                await interaction.reply({
+                    content: 'There was an error while executing this command!',
+                    flags: 64,
+                });
+            } catch (err) {
+                console.error('Failed to send error reply:', err);
+            }
         } else {
-            await interaction.reply({ content: 'There was an error while executing this command!'});
+            try {
+                await interaction.followUp({
+                    content: 'There was an error while executing this command!',
+                    flags: 64,
+                });
+            } catch (err) {
+                console.error('Failed to send follow-up:', err);
+            }
         }
     }
 });
