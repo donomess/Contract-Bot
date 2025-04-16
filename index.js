@@ -42,7 +42,7 @@ client.on('interactionCreate', async interaction => {
     }
 
     try {
-        await command.execute(interaction);
+        await command.execute(interaction, client, config);
     } catch (error) {
         console.error(`Error executing ${interaction.commandName}:`, error);
         if (interaction.replied || interaction.deferred) {
