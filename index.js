@@ -111,7 +111,7 @@ client.on('interactionCreate', async interaction => {
         console.log('terminating driver contract')
 
         const result = new EmbedBuilder()
-            .setTitle(`Driver Contract for - ${driver.username}`)
+            .setTitle(`Driver Contract Termination for - ${driver.username}`)
             .setThumbnail(driver.displayAvatarURL({dynamic: true}))
             .addFields(
                 {name: 'Team', value: `${team}`, inline:true},
@@ -149,7 +149,7 @@ client.on('interactionCreate', async interaction => {
         console.log('terminating tp contract')
 
         const result = new EmbedBuilder()
-            .setTitle(`Vice TP Contract for - ${vicetp.username}`)
+            .setTitle(`Vice TP Contract Termination for - ${vicetp.username}`)
             .setThumbnail(vicetp.displayAvatarURL({dynamic: true}))
             .addFields(
                 {name: 'Team', value: `${team}`, inline:true},
