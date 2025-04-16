@@ -28,7 +28,68 @@ const commands = [
     .addStringOption(option => 
         option.setName('termination')
         .setDescription('Not required. Mutual termination is implied')
+        .setRequired(false)),
+
+    new SlashCommandBuilder()
+        .setName('createtpcontract')
+        .setDescription('Create a new Vice TP Contract')
+        .addUserOption(option =>
+            option.setName('vicetp')
+            .setDescription('Person becoming Vice TP')
+            .setRequired(true))
+        .addRoleOption(option =>
+            option.setName('team')
+            .setDescription('The team the person is becoming Vice TP for')
+            .setRequired(true))
+        .addStringOption(option =>
+            option.setName('termination')
+            .setDescription('Termination Clause(s), mutual agreement is implied.')
+            .setRequired(false)),
+
+    new SlashCommandBuilder()
+    .setName('terminatedrivercontract')
+    .setDescription('Terminate driver contract')
+    .addUserOption(option =>
+        option.setName('driver')
+        .setDescription('Driver being terminated')
+        .setRequired(true))
+    .addRoleOption(option=>
+        option.setName('team')
+        .setDescription('The team the driver is being terminated from')
+        .setRequired(true))
+    .addStringOption(option => 
+        option.setName('tier')
+        .setDescription('Tier of the driver contract, include (reserve) if needed')
+        .setRequired(true))
+    .addStringOption(option => 
+        option.setName('termination')
+        .setDescription('Termination reason')
+        .setRequired(true))
+    .addAttachmentOption(option =>
+        option.setName('evidence')
+        .setDescription('Attachment Evidence of the termination (if needed)')
+        .setRequired(false)),
+    
+    new SlashCommandBuilder()
+    .setName('terminatetpcontract')
+    .setDescription('Terminate a Vice TP Contract')
+    .addUserOption(option =>
+        option.setName('vicetp')
+        .setDescription('Person being terminated Vice TP')
+        .setRequired(true))
+    .addRoleOption(option =>
+        option.setName('team')
+        .setDescription('The team the person is no longer Vice TP for')
+        .setRequired(true))
+    .addStringOption(option =>
+        option.setName('termination')
+        .setDescription('Termination reason')
+        .setRequired(true))
+    .addAttachmentOption(option =>
+        option.setName('evidence')
+        .setDescription('Attachment Evidence of the termination (if needed)')
         .setRequired(false))
+
     .toJSON()
 ];
 
