@@ -17,8 +17,8 @@ client.once('ready', () => {
 client.on('interactionCreate', async interaction => {
     if(!interaction.isChatInputCommand()) return;
 
-    if(interaction.commandName === 'createDriverContract'){
-        if(interaction.channel.id !== config.homeChannelId){
+    if(interaction.commandName === 'createdrivercontract'){
+        if(interaction.channelId !== config.homeChannelId){
             return interaction.reply({
                 content: 'You can only use this command in the ✍┋make-a-contract channel',
                 ephemeral: true
@@ -37,10 +37,10 @@ client.on('interactionCreate', async interaction => {
             .setThumbnail(driver.displayAvatarURL({dynamic: true}))
             .addFields(
                 {name: 'Team', value: `${team}`, inline:true},
-                {name: 'Tier', value: `${team}`, inline:true},
-                {name: 'Length', value: `${team}`, inline:true},
-                {name: 'Objectives', value: `${team}`, inline:true},
-                {name: 'Termination Clauses', value: `${team}`, inline:true},
+                {name: 'Tier', value: `${tier}`, inline:true},
+                {name: 'Length', value: `${length}`, inline:true},
+                {name: 'Objectives', value: `${objectives}`, inline:true},
+                {name: 'Termination Clauses', value: `${terms}`, inline:true},
 
             )
             .setFooter({text: 'Tick to accept!'})
