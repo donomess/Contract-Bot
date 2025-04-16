@@ -3,30 +3,30 @@ require('dotenv').config();
 
 const commands = [
     new SlashCommandBuilder()
-    .setName('createDriverContract')
+    .setName('createdrivercontract')
     .setDescription('Create a new driver contract')
     .addUserOption(option =>
-        option.setName('Driver')
+        option.setName('driver')
         .setDescription('Driver being contracted')
         .setRequired(true))
     .addRoleOption(option=>
-        option.setName9('Team')
+        option.setName('team')
         .setDescription('The team the driver is racing for')
         .setRequired(true))
     .addStringOption(option => 
-        option.setName('Tier')
+        option.setName('tier')
         .setDescription('Tier of the driver contract, include (reserve) if needed')
         .setRequired(true))
     .addStringOption(option => 
-        option.setName('Length')
+        option.setName('length')
         .setDescription('Length of the contract')
         .setRequired(true))
     .addStringOption(option => 
-        option.setName('Objectives')
+        option.setName('objectives')
         .setDescription('Objectives for the driver during the duration of the contract')
         .setRequired(true))
     .addStringOption(option => 
-        option.setName('Termination Clause(s)')
+        option.setName('termination')
         .setDescription('Not required. Mutual termination is implied')
         .setRequired(false))
     .toJSON()

@@ -25,12 +25,12 @@ client.on('interactionCreate', async interaction => {
             });
         };
 
-        const driver = interaction.options.getUser('Driver');
-        const team = interaction.options.getRole('Team');
-        const tier = interaction.options.getString('Tier');
-        const length = interaction.options.getString('Length')
-        const objectives = interaction.options.getString('Objectives');
-        const terms = interaction.options.getString('Termination Clause(s)');
+        const driver = interaction.options.getUser('driver');
+        const team = interaction.options.getRole('team');
+        const tier = interaction.options.getString('tier');
+        const length = interaction.options.getString('length')
+        const objectives = interaction.options.getString('objectives');
+        const terms = interaction.options.getString('termination');
 
         const result = new EmbedBuilder()
             .setTitle(`Driver Contract for - ${driver.username}`)
