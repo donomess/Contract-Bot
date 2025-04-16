@@ -16,6 +16,7 @@ client.once('ready', () => {
 
 client.on('interactionCreate', async interaction => {
     if(!interaction.isChatInputCommand()) return;
+    console.log(`[DEBUG] ${interaction.commandName} triggered by ${interaction.user.tag}`);
 
     if(interaction.commandName === 'createdrivercontract'){
         if(interaction.channelId !== config.homeChannelId){
@@ -30,8 +31,6 @@ client.on('interactionCreate', async interaction => {
         const tier = interaction.options.getString('tier');
         const length = interaction.options.getString('length')
         const objectives = interaction.options.getString('objectives');
-        const terms = interaction.options.getString('termination');
-        console.log('creating driver contract')
 
         const result = new EmbedBuilder()
             .setTitle(`Driver Contract for - ${driver.username}`)
@@ -70,7 +69,6 @@ client.on('interactionCreate', async interaction => {
         const vicetp = interaction.options.getUser('vicetp');
         const team = interaction.options.getRole('team');
         const terms = interaction.options.getString('termination');
-        console.log('creating vice tp contract')
 
         const result = new EmbedBuilder()
             .setTitle(`Vice TP Contract for - ${vicetp.username}`)
@@ -108,7 +106,6 @@ client.on('interactionCreate', async interaction => {
         const tier = interaction.options.getString('tier');
         const terms = interaction.options.getString('termination');
         const evi = interaction.options.getAttachment('evidence')
-        console.log('terminating driver contract')
 
         const result = new EmbedBuilder()
             .setTitle(`Driver Contract Termination for - ${driver.username}`)
@@ -146,7 +143,6 @@ client.on('interactionCreate', async interaction => {
         const team = interaction.options.getRole('team');
         const terms = interaction.options.getString('termination');
         const evi = interaction.options.getAttachment('evidence')
-        console.log('terminating tp contract')
 
         const result = new EmbedBuilder()
             .setTitle(`Vice TP Contract Termination for - ${vicetp.username}`)
