@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('createdrivercontract')
@@ -29,6 +30,42 @@ module.exports = {
         .setRequired(false)),
     async execute(interaction){
         console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
-        await interaction.reply({ content: 'Contract successfully created!'});
+
+        await interaction.deferReply({ ephemeral: true})
+
+        const driver = interaction.options.getUser('driver');
+        const team = interaction.options.getRole('team');
+        const tier = interaction.options.getString('tier');
+        const length = interaction.options.getString('length')
+        const objectives = interaction.options.getString('objectives');
+        const terms = interaction.options.getString('termination');
+        console.log('creating driver contract')
+
+        const result = new EmbedBuilder()
+            .setTitle(`Driver Contract for - ${driver.username}`)
+            .setThumbnail(driver.displayAvatarURL({dynamic: true}))
+            .addFields(
+                {name: 'Team', value: `${team}`, inline:true},
+                {name: 'Tier', value: `${tier}`, inline:true},
+                {name: 'Length', value: `${length}`, inline:true},
+                {name: 'Objectives', value: `${objectives}`, inline:true},
+                {name: 'Termination Clauses', value: `${terms}`, inline:true},
+
+            )
+            .setFooter({text: 'Tick to accept!'})
+            .setColor('DarkGreen')
+            .setTimestamp();
+        
+        const contractChannel = await client.channels.fetch(config.destChannelId)
+        const contractMessage = await contractChannel.send({content:`${driver}`, embeds: [result]});
+
+        await contractMessage.react('✅');
+
+        await interaction.reply({
+            content: 'Contract successfully created!',
+            ephemeral: true
+        });
+
+        await interaction.editReply({ content: 'Contract successfully created!'});
     }
 }

@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('terminatedrivercontract')
@@ -24,7 +25,40 @@ module.exports = {
         .setDescription('Attachment Evidence of the termination (if needed)')
         .setRequired(false)),
     async execute(interaction){
-        console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
-        await interaction.reply({ content: 'Contract successfully created!'});
+        console.log("[DEBUG] terminatedrivercontract triggered by", interaction.user.username);
+
+        await interaction.deferReply({ ephemeral: true})
+        
+        const driver = interaction.options.getUser('driver');
+        const team = interaction.options.getRole('team');
+        const tier = interaction.options.getString('tier');
+        const terms = interaction.options.getString('termination');
+        const evi = interaction.options.getAttachment('evidence')
+        console.log('terminating driver contract')
+
+        const result = new EmbedBuilder()
+            .setTitle(`Driver Contract Termination for - ${driver.username}`)
+            .setThumbnail(driver.displayAvatarURL({dynamic: true}))
+            .addFields(
+                {name: 'Team', value: `${team}`, inline:true},
+                {name: 'Tier', value: `${tier}`, inline:true},
+                {name: 'Termination Reason', value: `${terms}`, inline:true},
+                {name: 'Evidence', value: `${evi}`, inline: true}
+            )
+            .setFooter({text: 'Tick to accept! (Admin+ needed)'})
+            .setColor('DarkPurple')
+            .setTimestamp();
+        
+        const contractChannel = await client.channels.fetch(config.destChannelId)
+        const contractMessage = await contractChannel.send({content:`${driver}`, embeds: [result]});
+
+        await contractMessage.react('✅');
+
+        await interaction.reply({
+            content: 'Contract successfully terminated!',
+            ephemeral: true
+        });
+
+        await interaction.editReply({ content: 'Contract successfully terminated!'});
     }
 }
