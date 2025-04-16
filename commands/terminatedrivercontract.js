@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, Client } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, Client, GatewayIntentBits, Partials } = require('discord.js');
 const client = new Client({
     intents: [ 
         GatewayIntentBits.Guilds,
