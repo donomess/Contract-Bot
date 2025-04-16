@@ -22,6 +22,8 @@ module.exports = {
         .setRequired(false)),
     async execute(interaction, client, config){
         console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
+
+        await interaction.deferReply({ ephemeral: true });
         
         const vicetp = interaction.options.getUser('vicetp');
         const team = interaction.options.getRole('team');
@@ -47,9 +49,8 @@ module.exports = {
 
         await contractMessage.react('✅');
 
-        await interaction.reply({
-            content: 'Contract successfully terminated!',
-            ephemeral: true
+        await interaction.editReply({
+            content: 'Contract successfully created!',
         });
     }
 }

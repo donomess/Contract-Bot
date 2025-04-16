@@ -18,6 +18,8 @@ module.exports = {
         .setRequired(false)),
     async execute(interaction, client, config){
         console.log("[DEBUG] createtpcontract triggered by", interaction.user.username);
+
+        await interaction.deferReply({ ephemeral: true });
         
         const vicetp = interaction.options.getUser('vicetp');
         const team = interaction.options.getRole('team');
@@ -41,9 +43,8 @@ module.exports = {
 
         await contractMessage.react('✅');
 
-        await interaction.reply({
+        await interaction.editReply({
             content: 'Contract successfully created!',
-            ephemeral: true
         });
     }
 }

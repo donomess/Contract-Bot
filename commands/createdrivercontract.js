@@ -31,6 +31,8 @@ module.exports = {
     async execute(interaction, client, config){
         console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
 
+        await interaction.deferReply({ ephemeral: true });
+
         const driver = interaction.options.getUser('driver');
         const team = interaction.options.getRole('team');
         const tier = interaction.options.getString('tier');
@@ -59,9 +61,8 @@ module.exports = {
 
         await contractMessage.react('✅');
 
-        await interaction.reply({
+        await interaction.editReply({
             content: 'Contract successfully created!',
-            ephemeral: true
         });
     }
 }
