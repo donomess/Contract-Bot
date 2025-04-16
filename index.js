@@ -17,7 +17,7 @@ client.once('ready', () => {
 client.on('interactionCreate', async interaction => {
     if(!interaction.isChatInputCommand()) return;
 
-    if(interaction.commandName === 'createDriverContract'){
+    if(interaction.commandName === 'createdrivercontract'){
         if(interaction.channel.id !== config.homeChannelId){
             return interaction.reply({
                 content: 'You can only use this command in the ✍┋make-a-contract channel',
