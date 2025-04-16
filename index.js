@@ -31,6 +31,7 @@ client.on('interactionCreate', async interaction => {
         const tier = interaction.options.getString('tier');
         const length = interaction.options.getString('length')
         const objectives = interaction.options.getString('objectives');
+        const terms = interaction.options.getString('termination');
 
         const result = new EmbedBuilder()
             .setTitle(`Driver Contract for - ${driver.username}`)
