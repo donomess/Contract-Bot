@@ -31,7 +31,11 @@ module.exports = {
     async execute(interaction, client, config) {
     
         try {
-            await interaction.deferReply({ ephemeral: true });
+            if (interaction.replied || interaction.deferred) {
+                console.log("[DEBUG] Interaction already replied or deferred.");
+            } else {
+                await interaction.deferReply({ ephemeral: true });
+            }
 
             console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
     
