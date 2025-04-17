@@ -29,10 +29,11 @@ module.exports = {
         .setDescription('Not required. Mutual termination is implied')
         .setRequired(false)),
     async execute(interaction, client, config) {
-        console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
     
         try {
             await interaction.deferReply({ ephemeral: true });
+
+            console.log("[DEBUG] createdrivercontract triggered by", interaction.user.username);
     
             const driver = interaction.options.getUser('driver');
             const team = interaction.options.getRole('team');
