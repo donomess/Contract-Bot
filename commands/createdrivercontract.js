@@ -54,7 +54,8 @@ module.exports = {
                     { name: 'Tier', value: `${tier}`, inline: true },
                     { name: 'Length', value: `${length}`, inline: true },
                     { name: 'Objectives', value: `${objectives}`, inline: true },
-                    { name: 'Termination Clauses', value: terms ?? 'Mutual termination implied.', inline: true }
+                    { name: 'Termination Clauses', value: terms ?? 'Mutual termination implied.', inline: true },
+                    { name: 'Issued By', value: `<@${interaction.user.id}>`, inline: false}
                 )
                 .setFooter({ text: 'Tick to accept!' })
                 .setColor('DarkGreen')

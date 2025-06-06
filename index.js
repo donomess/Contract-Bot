@@ -13,6 +13,7 @@ const client = new Client({
 });
 
 client.commands = new Collection();
+const cooldowns = new Collection();
 
 const cmdPath = path.join(__dirname, 'commands');
 const cmdFiles = fs.readdirSync(cmdPath).filter(file => file.endsWith('.js'))
@@ -40,6 +41,31 @@ client.on('interactionCreate', async interaction => {
         console.error(`No command matching ${interaction.commandName} found.`);
         return;
     }
+
+    const now = Date.now();
+    const cooldownAmount = 60*1000;
+
+    if (!cooldowns.has(interaction.commandName)) {
+        cooldowns.set(interaction.commandName, new Collection());
+    }
+
+    const timestamp = cooldowns.get(interaction.commandName);
+    const userId = interaction.user.id;
+
+    if (timestamp.has(userId)) {
+        const expirationTime = timestamp.get(userId) + cooldownAmount;
+
+        if (now < expirationTime) {
+            const timeLeft = ((expirationTime - now) / 1000).toFixed(1);
+            return interaction.reply({
+                content: `Wait ${timeLeft}s before reusing the \`${interaction.commandName}\` command.`,
+                ephemeral: true
+            });
+        }
+    }
+
+    timestamp.set(userId, now);
+    setTimeout(() => timestamp.delete(userId), cooldownAmount);
 
     try {
         await command.execute(interaction, client, config);

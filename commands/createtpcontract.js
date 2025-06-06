@@ -32,6 +32,7 @@ module.exports = {
             .addFields(
                 {name: 'Team', value: `${team}`, inline:true},
                 {name: 'Termination Clauses', value: `${terms}`, inline:true},
+                { name: 'Issued By', value: `<@${interaction.user.id}>`, inline: false}
 
             )
             .setFooter({text: 'Tick to accept!'})

@@ -43,7 +43,8 @@ module.exports = {
                 {name: 'Team', value: `${team}`, inline:true},
                 {name: 'Tier', value: `${tier}`, inline:true},
                 {name: 'Termination Reason', value: `${terms}`, inline:true},
-                {name: 'Evidence', value: evi ? `[View Attachment](${evi.url})` : 'No attachment', inline:false}
+                {name: 'Evidence', value: evi ? `[View Attachment](${evi.url})` : 'No attachment', inline:false},
+                { name: 'Issued By', value: `<@${interaction.user.id}>`, inline: false}
             )
             .setFooter({text: 'Tick to accept! (Admin+ needed)'})
             .setColor('DarkPurple')
